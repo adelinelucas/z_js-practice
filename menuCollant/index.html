@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/1.1.1/marked.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>Menu Sticky</title>
+</head>
+<body>
+    <div class="topbar">
+        LOGO
+    </div>
+
+    <div class="menu" data-sticky>
+        <a href="#">Item 1</a>
+        <a href="#">Item 2</a>
+        <a href="#">Item 3</a>
+        <a href="#">Item 4</a>
+        <a href="#">Item 5</a>
+    </div>
+
+    <div class="content">
+       <div class="main">
+            <h1> Titre d'exemple</h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eos debitis modi odio quas quaerat soluta obcaecati, neque, nam assumenda nesciunt ullam esse! Sunt, tenetur fuga molestiae ipsum voluptatibus qui mollitia quisquam voluptatum quaerat magnam quia ab aliquam reprehenderit delectus veritatis quae quo laudantium? Minima a obcaecati eius nobis quas voluptatibus?</p>
+            <div style="background-color: #d5d5d5; height: 4000px"></div>
+       </div>
+       <div class="sidebar" >
+            <div class="sidebar-container">
+                <div class="block" data-sticky data-offset="68" data-constraint=".sidebar">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro qui aut dolore sit eveniet explicabo totam, quasi quisquam, similique sapiente consequatur ad nulla, incidunt laborum dicta.</div>
+                &nbsp;
+                <div class="block">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro qui aut dolore sit eveniet explicabo totam, quasi quisquam, similique sapiente consequatur ad nulla, incidunt laborum dicta.</div>
+            </div>
+       </div>
+    </div>
+    </div>
+    <div style="clear:both"></div>
+    <script src="./app.js"></script>
+</body>
+</html>
