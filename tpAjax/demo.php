@@ -1,0 +1,2 @@
+<p>Il va faire beau sur <?= $_GET['city']; ?></p>
+<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quidem recusandae iusto dolor laudantium earum vel ullam, provident dolorum iste. Ullam.</p>
