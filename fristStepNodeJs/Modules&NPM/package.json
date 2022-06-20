@@ -1,0 +1,16 @@
+{
+  "name": "tutoriel",
+  "version": "1.0.0",
+  "description": "tuto d'utilisation de nodes et ses packages ",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "Adeline",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.1",
+    "lodash": "^4.17.21"
+  }
+}
