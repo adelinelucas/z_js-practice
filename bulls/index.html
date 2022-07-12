@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./style.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>Bulls and Cows</title>
+</head>
+<body>
+    <main>
+        <h1>Bulls and Cows</h1>
+        <p id="gameStats">R: 1 | V:0 | D:0</p>
+        <label>Entrez votre nombre : </label>
+        <input type="number" name="" id="guessInput" min="1111" max="999" placeholder="ex:4562" onkeydown="if(event.keycode === 13) document.getElementById('submitButton').click()">
+        <input type="submit" id="submitButton" value="Guess" onclick="checkGuess()"/>
+        <input type="submit" id="rulesButton" value="Rules" onclick="printRules()"/>
+        <input type="submit" id="clearButton" value="Clear" onclick="clearLogs()"/>
+
+        <h2>Résultats</h2>
+        <textarea name="logs" id="logsArea" cols="50" rows="17" readonly="true"></textarea>
+    </main>
+    <script src="./app.js"></script>
+</body>
+</html>
