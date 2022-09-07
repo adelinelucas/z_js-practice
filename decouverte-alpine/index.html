@@ -109,5 +109,46 @@
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus aperiam excepturi obcaecati iste dicta earum labore voluptatum? Odio, exercitationem soluta nesciunt labore culpa provident, necessitatibus, cum asperiores voluptatibus veritatis ea? Quam voluptas laboriosam, error doloribus obcaecati enim dolore est tenetur! Explicabo officiis totam aliquam, dolorum quos sed magnam reprehenderit voluptatum deserunt beatae architecto ad doloribus eum temporibus aliquid. Non hic corrupti ex consequatur quia eveniet atque quibusdam impedit quae ut? Nesciunt quas vel, voluptatum eveniet porro mollitia nemo voluptate aperiam officiis magnam, blanditiis beatae iure eos asperiores quae sint. Placeat sapiente nisi commodi ratione deserunt sit omnis, at, velit temporibus, modi eius excepturi obcaecati neque rem nam inventore vitae maiores quas porro dolor voluptatum quam! Quibusdam possimus dolores consectetur esse perferendis suscipit sit architecto numquam temporibus cupiditate, maxime pariatur officia ex quaerat error? Unde rerum corrupti fugit rem omnis voluptatibus at officia, corporis consequuntur voluptates vel veniam, sequi ratione error dolore inventore quo soluta expedita! Hic, qui pariatur consequatur maiores iste culpa nulla beatae facilis omnis placeat quae facere. Odio itaque rem est iure unde. Dolor sit omnis expedita totam consectetur dignissimos dolore earum beatae eligendi labore architecto, magni nihil reprehenderit incidunt perferendis enim animi tenetur libero quod laudantium eum eveniet, nam veritatis? Veritatis iusto at ipsum quasi dicta ratione assumenda temporibus totam corrupti dolore repudiandae modi hic debitis illum non fugiat, provident dignissimos deleniti, iure sint sit dolor, consequatur corporis! Odit aliquam saepe, voluptate praesentium provident harum itaque adipisci dolorem sed nam deleniti. Atque rerum voluptas doloremque tenetur amet.
         </div>
     </section>
+
+    <section class="my-12 mx-4 bg-gray-200 p-8">
+        <div class="container mx-auto px-2 py-2" x-data="{
+            faqs: [
+                    {
+                        question: 'How to use Alpine JS',
+                        answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus aperiam excepturi obcaecati iste dicta earum labore voluptatum? Odio, exercitationem soluta nesciunt labore culpa provident, necessitatibus',
+                        isOpenButton: false
+                    },
+                    {
+                        question: 'How to custom Alpine JS',
+                        answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus aperiam excepturi obcaecati iste dicta earum labore voluptatum? Odio, exercitationem soluta nesciunt labore culpa provident, necessitatibus',
+                        isOpenButton: false
+                    },
+                    {
+                        question: 'I learn Alpine JS',
+                        answer: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus aperiam excepturi obcaecati iste dicta earum labore voluptatum? Odio, exercitationem soluta nesciunt labore culpa provident, necessitatibus',
+                        isOpenButton: false
+                    }
+            ]
+        }">
+    
+        <h2 class="text-2xl font-bold">FAQs</h2>
+        <div class="leading-loose text-lg mt-6">
+            <template x-for="faq in faqs" :key="faq.question">
+                <div>
+                    <button class="w-full font-bold border-b border-gray-400 py-3 flex justify-between items-center mt-4"
+                    @click="faq.isOpenButton = !faq.isOpenButton">
+                        <div x-text="faq.question"></div>
+                        <i class="fa-solid fa-circle-plus" x-show="!faq.isOpenButton"></i>
+                        <i class="fa-solid fa-circle-minus" x-show="faq.isOpenButton"></i>
+                    </button>
+                    <div class="text-gray-700 text-sm mt-2"
+                        x-text="faq.answer"
+                        x-show="faq.isOpenButton">
+                    </div>
+                </div>
+            </template>
+        </div>
+    </div>
+    </section>
 </body> 
 </html>
