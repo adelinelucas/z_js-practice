@@ -26,7 +26,16 @@
                 <i class="fa-solid fa-user"></i>
             </button>
         </div>
-        <ul class="overflow-hidden bg-red-900 rounded w-48 border mt-2 py-1 right-0 z-20 text-white" x-show="isOpenDropDown" @click.away="isOpenDropDown = false" >
+        <ul class="overflow-hidden bg-red-900 rounded w-48 border mt-2 py-1 right-0 z-20 text-white" 
+        x-show="isOpenDropDown" 
+        @click.away="isOpenDropDown = false"
+        x-transition:enter="transition transform origin-top-right ease-out duration-500"
+        x-transition:enter-start="opacity-0 scale-75"
+        x-transition:enter-end="opacity-100 scale-100"
+        x-transition:leave="transition transform origin-top-right ease-out duration-500"
+        x-transition:leave-start="opacity-100 scale-100"
+        x-transition:leave-end="opacity-0 scale-75"
+        >
             <li>Un arbre</li>
             <li>Un lion</li>
             <li>Une sauterelle</li>
@@ -37,21 +46,30 @@
 
     <section class="my-12 mx-4 bg-gray-200 p-8" x-data="{isOpenNav: false}">
         <i>Dropdown nav</i>
-        <nav class="container mx-auto px-4 flex items-center justify-between py-4" x-data="{isOpenNav = false}">
+        <nav class="container mx-auto px-4 flex items-center justify-between py-4" x-data="{isOpenNav : false}">
             <div class="relative">
                 <button class="flex items-center text-orange-400 bg-blue-700 py-5 px-10 text-3xl" 
                 @click="isOpenNav= true">
                     <i class="fa-solid fa-bars"></i>
                 </button>
             </div>
-            <div class="flex flex-row w-full"  x-show="isOpenNav" @click.away="isOpenNav=false">
+            <div class="flex flex-row w-full"  
+            x-show.transition.in.duration.1000ms.opacity.scale.25.origin.top.right.out.duration.2000ms.opacity.sclae.25.origin.top.right="isOpenNav"
+            @click.away="isOpenNav=false"
+            >
+            <!-- x-transition:enter="transition ease-out duration-300 -ml-64"
+            x-transition:enter-start=""
+            x-transition:enter-end="transform translate-x-64"
+            x-transition:leave="transition ease-out duration-300"
+            x-transition:leave-start=""
+            x-transition:leave-end="transform -translate-x-64" -->
                 <div >
                     <button class="flex items-center text-gray-700 bg-blue-100 py-5 px-10 text-3xl " @click="isOpenNav= false">
                         <i class="fa-solid fa-xmark"></i>
                     </button>
                 </div>
                 <ul class="overflow-hidden bg-yellow-400 rounded w-48 border mt-2 py-1 right-0 z-20 text-blue-700">
-                    <li>Un arbre</li>
+                    <li>Un arbre !</li>
                     <li>Un lion</li>
                     <li>Une sauterelle</li>
                     <li>Un orgre</li>
@@ -131,24 +149,106 @@
             ]
         }">
     
-        <h2 class="text-2xl font-bold">FAQs</h2>
-        <div class="leading-loose text-lg mt-6">
-            <template x-for="faq in faqs" :key="faq.question">
-                <div>
-                    <button class="w-full font-bold border-b border-gray-400 py-3 flex justify-between items-center mt-4"
-                    @click="faq.isOpenButton = !faq.isOpenButton">
-                        <div x-text="faq.question"></div>
-                        <i class="fa-solid fa-circle-plus" x-show="!faq.isOpenButton"></i>
-                        <i class="fa-solid fa-circle-minus" x-show="faq.isOpenButton"></i>
-                    </button>
-                    <div class="text-gray-700 text-sm mt-2"
-                        x-text="faq.answer"
-                        x-show="faq.isOpenButton">
+            <h2 class="text-2xl font-bold">FAQs</h2>
+            <div class="leading-loose text-lg mt-6">
+                <template x-for="faq in faqs" :key="faq.question">
+                    <div>
+                        <button class="w-full font-bold border-b border-gray-400 py-3 flex justify-between items-center mt-4"
+                        @click="faq.isOpenButton = !faq.isOpenButton">
+                            <div x-text="faq.question"></div>
+                            <i class="fa-solid fa-circle-plus" x-show="!faq.isOpenButton"></i>
+                            <i class="fa-solid fa-circle-minus" x-show="faq.isOpenButton"></i>
+                        </button>
+                        <div class="text-gray-700 text-sm mt-2"
+                            x-text="faq.answer"
+                            x-show="faq.isOpenButton">
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+    </section>
+
+    <section class="my-12 mx-4 bg-gray-200 p-8">
+        <div class="bg-gray-400 text-gray-800">
+            <div class="container mx-auto px-4" 
+            x-data="{quote:''}"
+            x-init="
+                fetch('https://api.kanye.rest')
+                    .then(response => response.json())  
+                    .then(data => quote = data.quote)  
+            "
+            >
+                <div class="flex flex-col items-center text-center justify-center h-screen text-2xl italic">
+                    <h2 class="font-extrabold text-rose-900">Quotes goes here</h2>
+                    <div class="flex items-center text-center justify-center h-screen text-2xl italic"
+                    x-text="`&quot; ${quote} &quot;`"
+                    >
+
                     </div>
                 </div>
-            </template>
+            </div>
         </div>
-    </div>
     </section>
+
+    <section  class="my-12 mx-4 bg-gray-200 p-8">
+        <div class="container mx-auto max-w-sm px-4 my-4" x-data="todos()">
+            <div class="bg-white shadow-md rounded px-6 py-4">
+                <h2 class="text-2xl font-bold">Todo App</h2>
+
+                <div class="mt-4 mb-6">
+                    <input 
+                    type="text" 
+                    class="shadow w-full px-2 py-2" 
+                    x-model="todoTitle"
+                    @keydown.enter="addTodo()"
+                    />
+                </div>
+
+                <ul class="mb-6">
+                    <template x-for=" todo in todos" :key="todo.id">
+                        <li class="flex items-center justify-between mt-3">
+                            <div class="flex items-center" :class="{'line-through': todo.isComplete}">
+                                <input type="checkbox"  x-model="todo.isComplete"/>
+                                <div class="ml-3" x-text="todo.title"></div>
+                                <button class="text-xl ml-2" @click="deleteTodo(todo.id)">&times;</button>
+                            </div>
+                        </li>
+                    </template>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function todos() {
+            return {
+                todos: [{
+                    id:1,
+                    title: 'Finish Alpine Tuto ',
+                    isComplete: false,
+                }],
+                todoTitle: '',
+                todoId: 2,
+                addTodo(){
+                    if(this.todoTitle.trim() === ''){
+                        return;
+                    }
+
+                    this.todos.push({
+                        id:this.todoId,
+                        title: this.todoTitle,
+                        isComplete: false
+                    })
+
+                    this.todoId ++;
+                    this.todoTitle = '';
+                },
+                deleteTodo(id){
+                    this.todos= this.todos.filter( todo => id !== todo.id)
+                }
+            }
+        }
+    </script>
 </body> 
 </html>
