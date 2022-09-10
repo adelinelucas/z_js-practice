@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="//unpkg.com/alpinejs" defer></script>
+    <link href="/dist/output.css" rel="stylesheet">
+    <link href="./style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <title>Alpine JS Practise</title>
+</head>
+<body>
+    <section class="my-12 mx-4 bg-gray-200 p-8" x-data="{isOpen:false}">
+        <button class="bg-emerald-700 text-slate-50 text-base px-4 rounded-full" x-on:click=" isOpen = !isOpen ">Toggle</button>
+        <button class="bg-emerald-700 text-slate-50 text-base px-4 rounded-full" @click=" isOpen = !isOpen ">Toggle with shortcut</button>
+        <h1 x-show="isOpen">Contenu visible au toggle</h1>
+    </section>
+
+    <section class="my-12 mx-4 bg-gray-200 p-8" x-data="{isOpenDropDown: false}">
+        <i>Dropdown menu</i>
+        <div class="relative">
+            <button class="flex items-center text-orange-400 bg-blue-700 py-5 px-10 text-3xl" 
+            @click="isOpenDropDown= !isOpenDropDown"
+            @keydown.escape="isOpenDropDown = false">
+                <i class="fa-solid fa-user"></i>
+            </button>
+        </div>
+        <ul class="overflow-hidden bg-red-900 rounded w-48 border mt-2 py-1 right-0 z-20 text-white" x-show="isOpenDropDown" @click.away="isOpenDropDown = false" >
+            <li>Un arbre</li>
+            <li>Un lion</li>
+            <li>Une sauterelle</li>
+            <li>Un orgre</li>
+            <li>Une orange</li>
+        </ul>
+    </section>
+
+    <section class="my-12 mx-4 bg-gray-200 p-8" x-data="{isOpenNav: false}">
+        <i>Dropdown nav</i>
+        <nav class="container mx-auto px-4 flex items-center justify-between py-4" x-data="{isOpenNav = false}">
+            <div class="relative">
+                <button class="flex items-center text-orange-400 bg-blue-700 py-5 px-10 text-3xl" 
+                @click="isOpenNav= true">
+                    <i class="fa-solid fa-bars"></i>
+                </button>
+            </div>
+            <div class="flex flex-row w-full"  x-show="isOpenNav" @click.away="isOpenNav=false">
+                <div >
+                    <button class="flex items-center text-gray-700 bg-blue-100 py-5 px-10 text-3xl " @click="isOpenNav= false">
+                        <i class="fa-solid fa-xmark"></i>
+                    </button>
+                </div>
+                <ul class="overflow-hidden bg-yellow-400 rounded w-48 border mt-2 py-1 right-0 z-20 text-blue-700">
+                    <li>Un arbre</li>
+                    <li>Un lion</li>
+                    <li>Une sauterelle</li>
+                    <li>Un orgre</li>
+                    <li>Une orange</li>
+                </ul>
+            </div>
+        </nav> 
+    </section>
+
+    <section class="my-12 mx-4 bg-gray-200 p-8">
+        <div class="container mx-auto px-4 mt-4" x-data="{image: 'image1'}">
+            <div>
+                <img src="https://media.istockphoto.com/vectors/blue-blot-vector-id517055220?k=20&m=517055220&s=612x612&w=0&h=A-RqRibO1o7v-NxO1TWd7Ik9Ql0Cc3RlGo50Tev4Oio=" alt="image 1" class="w-64" x-show="image === 'image1' ">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCHob5Qbjm3gOdsG-lxOLHzR2auJ72SDhE1mLrHs-G7oItZhDe6a9n6c5bsNouVz_8jaU&usqp=CAU" alt="image 2" class="w-64" x-show="image === 'image2' " >
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq1yfLlNeUpb8OE1BF5CFxLS8aIMe296LSfx8FtsEC8VqZtDrk8x3troDgGzJ7beQJPPQ&usqp=CAU" alt="image 2" class="w-64" x-show="image === 'image3' " >
+                <img src="https://images.pexels.com/photos/2268728/pexels-photo-2268728.jpeg?cs=srgb&dl=pexels-jeffrey-czum-2268728.jpg&fm=jpg" alt="image 2" class="w-64" x-show="image === 'image4' " >
+            </div>
+            <div class="flex mx-10">
+                <a href="#" class="border border-transparent hover:border-blue-500"
+                :class="{'border-blue-500' : image === 'image1'}"
+                @click.prevent="image='image1'"
+                >
+                    <img src="https://media.istockphoto.com/vectors/blue-blot-vector-id517055220?k=20&m=517055220&s=612x612&w=0&h=A-RqRibO1o7v-NxO1TWd7Ik9Ql0Cc3RlGo50Tev4Oio=" alt="imgage blue" class="w-20"/>
+                </a>
+                <a href="#" class="border border-transparent hover:border-orange-500"  
+                :class="{'border-orange-500' : image === 'image2'}"
+                @click.prevent="image='image2'">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCHob5Qbjm3gOdsG-lxOLHzR2auJ72SDhE1mLrHs-G7oItZhDe6a9n6c5bsNouVz_8jaU&usqp=CAU" alt="imgage blue" class="w-20" />
+                </a>
+                <a href="#" class="border border-transparent hover:border-purple-500" 
+                :class="{'border-purple-500' : image === 'image3'}"
+                @click.prevent="image='image3'">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRq1yfLlNeUpb8OE1BF5CFxLS8aIMe296LSfx8FtsEC8VqZtDrk8x3troDgGzJ7beQJPPQ&usqp=CAU" alt="imgage blue" class="w-20"/>
+                </a>
+                <a href="#" class="border border-transparent hover:border-black"
+                :class="{'border-black' : image === 'image4'}"
+                @click.prevent="image='image4'">
+                    <img src="https://images.pexels.com/photos/2268728/pexels-photo-2268728.jpeg?cs=srgb&dl=pexels-jeffrey-czum-2268728.jpg&fm=jpg" alt="imgage blue" class="w-20"/>
+                </a>
+            </div> 
+        </div>  
+    </section>
+
+    <section class="my-12 mx-4 bg-gray-200 p-8">
+        <div x-data="{atTop: true}">
+            <nav 
+            class="p-4 w-full fixed top-0 left-0 text-base text-white bg-red-900"
+            :class="{'bg-yellow-700 shadow-md' : !atTop}"
+            @scroll.window="atTop= (window.pageYOffset > 20) ? false : true"
+            >Top nav bar goes here</nav>
+        </div>
+        <div class="container mx-auto p-4 pt-16">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non, mollitia! Natus libero tenetur dolorum nihil veniam deleniti consectetur quaerat quam officiis, excepturi eligendi illum? Velit inventore illum hic ut, officia dolore incidunt quae porro deleniti esse eum ipsum expedita, excepturi explicabo maiores, molestiae fugit minima odit distinctio aperiam commodi eaque quas! Cum ipsa a consequatur numquam maiores animi eos molestias, dolorum veniam ducimus aliquid sunt obcaecati voluptates tenetur mollitia iusto quis, maxime labore! Ab necessitatibus architecto, eos atque at iusto consequatur hic fuga beatae explicabo temporibus iure, reiciendis corrupti sed repellat amet delectus unde officiis numquam reprehenderit eius voluptatem dolorum sapiente? Rerum ea ipsam consequuntur nulla aspernatur delectus voluptatem incidunt amet distinctio harum enim laborum assumenda cupiditate atque deleniti nesciunt eius facere ratione voluptates dicta doloribus eveniet autem, asperiores veritatis. Consequuntur doloremque doloribus assumenda. Voluptates, molestiae consequatur maxime nulla accusantium rerum possimus mollitia perferendis exercitationem tempore similique, impedit quod temporibus enim consectetur, ex omnis nostrum est totam. Consequatur totam voluptatum, sequi ducimus nobis, alias voluptates rerum expedita beatae fuga fugiat dolore, distinctio cupiditate iusto eum iste. Porro iusto, eos cumque vel laudantium corrupti sequi quo non incidunt asperiores voluptate aspernatur quos nobis possimus earum eum! Impedit molestias ipsam voluptatum. Ipsam fuga, dolores nemo maxime quaerat velit commodi nesciunt iste corporis deserunt quas nisi voluptatibus assumenda, enim ex vel corrupti officiis sunt sint aliquid aperiam quod voluptates fugit. Rem numquam iure eligendi, saepe excepturi doloribus fuga laborum eaque sint necessitatibus, soluta corporis, debitis est dolorum delectus quidem quisquam eum nesciunt ipsam?
+            <br>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Possimus aperiam excepturi obcaecati iste dicta earum labore voluptatum? Odio, exercitationem soluta nesciunt labore culpa provident, necessitatibus, cum asperiores voluptatibus veritatis ea? Quam voluptas laboriosam, error doloribus obcaecati enim dolore est tenetur! Explicabo officiis totam aliquam, dolorum quos sed magnam reprehenderit voluptatum deserunt beatae architecto ad doloribus eum temporibus aliquid. Non hic corrupti ex consequatur quia eveniet atque quibusdam impedit quae ut? Nesciunt quas vel, voluptatum eveniet porro mollitia nemo voluptate aperiam officiis magnam, blanditiis beatae iure eos asperiores quae sint. Placeat sapiente nisi commodi ratione deserunt sit omnis, at, velit temporibus, modi eius excepturi obcaecati neque rem nam inventore vitae maiores quas porro dolor voluptatum quam! Quibusdam possimus dolores consectetur esse perferendis suscipit sit architecto numquam temporibus cupiditate, maxime pariatur officia ex quaerat error? Unde rerum corrupti fugit rem omnis voluptatibus at officia, corporis consequuntur voluptates vel veniam, sequi ratione error dolore inventore quo soluta expedita! Hic, qui pariatur consequatur maiores iste culpa nulla beatae facilis omnis placeat quae facere. Odio itaque rem est iure unde. Dolor sit omnis expedita totam consectetur dignissimos dolore earum beatae eligendi labore architecto, magni nihil reprehenderit incidunt perferendis enim animi tenetur libero quod laudantium eum eveniet, nam veritatis? Veritatis iusto at ipsum quasi dicta ratione assumenda temporibus totam corrupti dolore repudiandae modi hic debitis illum non fugiat, provident dignissimos deleniti, iure sint sit dolor, consequatur corporis! Odit aliquam saepe, voluptate praesentium provident harum itaque adipisci dolorem sed nam deleniti. Atque rerum voluptas doloremque tenetur amet.
+        </div>
+    </section>
+</body> 
+</html>
