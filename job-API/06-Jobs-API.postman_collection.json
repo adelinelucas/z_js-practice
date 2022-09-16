@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "32161275-3b02-4956-bd9d-10e9aab4643a",
+		"name": "06-Jobs-API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22315366"
+	},
+	"item": [
+		{
+			"name": "Auth- register",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.globals.set(\"accessToken\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\":\"toto\",\r\n    \"email\":\"test3@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/auth/register",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Auth - login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();\r",
+							"pm.globals.set(\"accessToken\", jsonData.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\":\"test1@gmail.com\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/auth/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Job - create Job",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzIzOWNjNTZmMjcwMTJkOTRlNTM4OWMiLCJuYW1lIjoiYWRlbGluZSIsImlhdCI6MTY2MzI3ODI3OCwiZXhwIjoxNjY1ODcwMjc4fQ.mfAK6RZUjqY95h-5FdC2urydIrBD04oKnaNmKeIWWdQ",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"company\": \"economie d'energie\",\r\n    \"position\": \"interne\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/jobs",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get all job for one user",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MzIzOWNjNTZmMjcwMTJkOTRlNTM4OWMiLCJuYW1lIjoiYWRlbGluZSIsImlhdCI6MTY2MzI3ODI3OCwiZXhwIjoxNjY1ODcwMjc4fQ.mfAK6RZUjqY95h-5FdC2urydIrBD04oKnaNmKeIWWdQ",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/jobs",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"jobs"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get one job ",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/jobs/63244ea91b7d912188d6c4c0",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"jobs",
+						"63244ea91b7d912188d6c4c0"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "update one job",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"company\": \"disney\",\r\n    \"position\": \"full stack dev\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/jobs/6324513b1b7d912188d6c4c7",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"jobs",
+						"6324513b1b7d912188d6c4c7"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete job",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{URL}}/jobs/63244bfec1a398140c27350c",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"jobs",
+						"63244bfec1a398140c27350c"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

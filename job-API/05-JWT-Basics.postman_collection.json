@@ -1,0 +1,59 @@
+{
+	"info": {
+		"_postman_id": "9ae32dba-9262-424c-8847-3f683d29e82f",
+		"name": "05/JWT-Basics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "22315366"
+	},
+	"item": [
+		{
+			"name": "get dashboard",
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQsInVzZXJuYW1lIjoidGVzdCIsImlhdCI6MTY2MzE4NzExMywiZXhwIjoxNjY1Nzc5MTEzfQ.wZyWNeutujupScWDMDD4C277LK3n4UBQmryRJ4iW9jw",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{URL}}/dashboard",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"dashboard"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\":\"test\",\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/login",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
