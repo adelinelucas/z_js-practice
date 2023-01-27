@@ -357,6 +357,7 @@ Cocktail
   animation: load1 1s infinite ease-in-out;
   width: 1em;
   height: 4em;
+  color:#797d7fa9
 }
 .loader {
   color: var(--primaryColor);
