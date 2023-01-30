@@ -3,7 +3,6 @@ import React, {useState} from 'react';
 const GroupeTeamMembers = ({employees, selectedTeam, setTeam}) => {
 
     const [groupedEmployees, setGroupedData] = useState(groupTeamMembers())
-    console.log(employees)
     function groupTeamMembers(){
         let teams = [];
         let teamAMembers = employees.filter((employee)=> employee.teamName === 'TeamA')
