@@ -43,10 +43,13 @@ REST : stand for Representational State Transfer.
 Guigind arrchitectural constaints requires for restful API : 
     - client server architecture
     - statelessness
-    - cacheadbility
+    - cacheadbility like lastmodify or e-tags
     - layered System
-    - code on demand
-    - uniform interface
+    - code on demand (API return code that is runnable, like it return an embedable widget or some actual JS code)
+    - uniform interface - ressource identification in request
+                        - ressource manipulation through representations
+                        - self-descriptive message
+                        - hypermedia as the engine of application state
 
 When doing a request, the server won't keep in track info, so if you have to pass authentifications info you passe it through the headers. 
 When we do a request, we look for a ressource, (ressource to reference to an object). Mots of what we want our applications to be able to do can to the ressource be express to through the word CRUD : create, read, update, delete. 
@@ -58,3 +61,44 @@ JSON provides a great way to structure and nest the data.
 ### Curl 
 Curl is an open source tool that is used to send data back and forth and it runs locally on your computer. 
 Curl is a command that we can run from our terminal, you have to install it frist. 
+
+### Tools to explore API 
+. Postman /. Rest Fox / Thunder Client 
+
+### Helper libraries 
+
+helper libraries help to avoid write boiler plate code(same code you have to code frequently). 
+
+RQ : In asynchronus code we always have a catch error to know what is happening, otherwise you will never be able to know whate happened. 
+async / await is syntatical sugar 
+expl code
+        const accountSid = process.env.TWILIO_ACCOUNT_SID;
+        const authToken = process.env.TWILIO_AUTH_TOKEN;
+        const client = require('twilio')(accountSid, authToken);
+
+        async function deleteAllMessages() {
+        const messages = await client.messages.list();
+        for (message of messages) {
+            console.warn(`Deleting ${message.sid}`);
+            message.remove();
+        }
+        } 
+
+        console.log("Starting program");
+        deleteAllMessages()
+        .then(() => console.log("DONE"))
+        .catch((err) => console.error(err));
+
+### CLI 
+Commande line interface can be used to make API calls from an exectuable on our machine. 
+
+
+### Serverless or Cloud
+Serverless is just other people's servers, The key of serverless is that you don't have to worry how many people are on your website at the same time. 
+It working withe web hooks. 
+
+#### Web hooks 
+Web hook are somtimes calles a reverse API. Instead of you calling the API, the API calls you. 
+
+### Fetch API 
+
