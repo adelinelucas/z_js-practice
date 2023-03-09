@@ -1,6 +1,18 @@
+// ## Assignment
+
+// Users need to be able to delete their player accounts! Complete the `deleteUser` function. It should send a `DELETE` request to the given `fullURL`. You'll need to set the method, mode and headers. Like before, set the `X-API-Key` header to equal the given `apiKey`.
+
 async function deleteUser(baseURL, id, apiKey) {
   const fullURL = `${baseURL}/${id}`
-  // ?
+  const response = await fetch(fullURL, {
+    method: 'DELETE',
+    mode: 'cors',
+    headers: {
+      'X-API-Key': apiKey
+    } 
+  })
+
+  return response.json();
 }
 
 // don't touch below this line

@@ -1,11 +1,37 @@
+// ## Assignment
+
+// You will now use the knowledge you have gained thus far to update a *Fantasy Quest* character using a `PUT` request and retrieve that character using a `GET` request.
+
+// Complete the `updateUser()` and `getUserById()` functions. They should update and retrieve individual user resources respectively. They should also both return a promise that resolves to the JSON response body of their respective `fetch()` requests.
+
+// We've included the `fullURL` creation logic for you in both functions, we'll be talking more about URL building in the next chapter.
+
 async function updateUser(baseURL, id, data, apiKey) {
   const fullURL = `${baseURL}/${id}`
-  // ?
+  const response = await fetch(fullURL, {
+    method: 'PUT',
+    mode:'cors',
+    headers: {
+      'Content-Type': 'application/json',
+      'X_API-KEY': apiKey
+      },
+      body: JSON.stringify(data)
+  })
+
+  return response.json();
 }
 
 async function getUserById(baseURL, id, apiKey) {
   const fullURL = `${baseURL}/${id}`
-  // ?
+  const response = await fetch(fullURL, {
+    method: 'GET',
+    mode: 'cors',
+    headers: {
+    'Content-Type': 'application/json',
+    'X_API-KEY': apiKey
+    }
+ })
+ return response.json()
 }
 
 // don't touch below this line

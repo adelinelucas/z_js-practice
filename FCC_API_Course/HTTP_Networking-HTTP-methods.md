@@ -135,3 +135,51 @@ async function getUserCode(url, apiKey) {
   return response.status
 }
 ```
+
+# HTTP PUT
+
+The HTTP [`PUT`](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PUT) method creates a new resource or replaces a representation of the target resource with the contents of the request's `body`. In short, it updates a resource's properties.
+
+```js
+await fetch(url, {
+   method: 'PUT',
+   mode: 'cors',
+   headers: {
+   'Content-Type': 'application/json'
+   },
+   body: JSON.stringify(data)
+})
+```
+
+## POST vs PUT
+Put can create a ressource : expl the action on the server is to create it if doesn't exist or update if it does exist. 
+
+You may be thinking `PUT` is similar to `POST` or `PATCH`, and frankly, you'd be right! The main difference is that PUT is meant to be [idempotent](https://developer.mozilla.org/en-US/docs/Glossary/Idempotent), meaning multiple identical PUT requests *should* have the same effect on the server. In contrast, several identical `POST` requests would have additional side effects, such as creating multiple copies of the resource.
+
+idemptent : you souh be able to send a put request multiple times without creating multiple ressources. it is possible beacause you generally include the id of the element you are updating. 
+
+# HTTP Patch vs PUT
+
+You may encounter [PATCH](https://developer.mozilla.org/en-US/docs/Web/HTTP/Methods/PATCH) methods from time to time. While it is not nearly as common as the other methods, like `PUT`, it's important to know about it and what it does. The `PATCH` method is intended to *partially* modify a resource.
+
+Long story short, `PATCH` isn't nearly as popular as `PUT`, and many servers, even if they allow partial updates, will still just use the `PUT` method for that.
+
+the intended difference for these 2 HTTP methods was that put would swap out entire ressources or update entire ressource. Patch would just update partial sections of a ressource. 
+PUT typically updates entire resources, while PATCH updates a partial resource.
+
+# HTTP Delete
+
+The `delete` request does exactly as you would expect: it deletes a specified resource.
+
+### Example of HTTP DELETE
+
+```js
+// This deletes the location with ID: 52fdfc07-2182-454f-963f-5f0f9a621d72
+const url = 'https://api.boot.dev/v1/courses_rest_api/learn-http/locations/52fdfc07-2182-454f-963f-5f0f9a621d72'
+
+await fetch(url, {
+  method: 'DELETE',
+  mode: 'cors'
+})
+```
+

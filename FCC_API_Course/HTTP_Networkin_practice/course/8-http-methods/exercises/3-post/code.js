@@ -25,7 +25,7 @@ async function createUser(apiKey, url, data) {
     body: JSON.stringify(data)
   })
 
-  return await response.json();
+  return await response.json
 }
 
 // Test Suite Don't Touch Below This Line
