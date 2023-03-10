@@ -11,3 +11,10 @@ the way testing works with jes, it there's kind of this top level test function 
     - second input is a function. In this function we can use this expect function to do a test. 
 
 When we run jest, it will compare expect output to to equal at what we've pre-defined. 
+
+
+Relative url : is a URL that does not include the protocol and the domain, it's just include the path. 
+In this case, the browser will assume that these reletive link are attached to the same domain. 
+
+
+NB: a recursive function is a function that calls itself. 
