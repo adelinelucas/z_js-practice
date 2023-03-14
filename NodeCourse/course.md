@@ -140,6 +140,20 @@ readFile('./pathTotheFile', 'utf8',(err, result)=>{
 // if we don't provide utf encoding, the function will return a buffer. 
 `````
 
+## Util 
+Util is another built-in dependency in node, is can help us to provide different functionality like to create more easily Promise. 
+
+`````js
+const util = require('util')
+const myPromise = util.promisify('whatIwant')
+`````
+
+RQ 'fs' provides us promise functionnality: 
+
+`````js
+const {readfile, writeFile} = require('fs').promises // now readfile and writeFile are promises
+`````
+
 ## Async or Sync
 Async approches will help us to serve multiple demands, and for exempl if we have various request on our sever we will be able to treat them in parallèle and avoid to have our application down because we are treating one demande after one demande (sync) 
 
@@ -188,9 +202,129 @@ Allow us to add package to our project to be able to use library, utilies functi
 
 1. Install a local dependance 
     npm i @packageName
-
+    npm i @packageName -D //  npm i @packageName --save-dev ==> to add the dependency only in dev mode. 
 3. Install a global dependance 
     npm i -g @packageName
 
 RQ: package.json is a manifest file stat stores important info about project/package. 
 **npm init -y**
+
+### Add commande to package json
+To run a command that you've create you have tu run **npm run nomeOfCommand** 
+
+## To uninstall a pacakge 
+**npm uninstall packageName**
+
+RQ: Package json file is essential to have the specific version of package that work togheter. 
+
+## Event Loop 
+The event loop is what allow nodeJS tp perform non-blocking I/O (input/output) oparations despite the fact that JS is signle-threaded by offloading operation to the system kernel whenever possible. 
+The event loop is very interesting for register the callbakc and olny when the operation is complete it execute it. And allows us to manage client request on our website. 
+
+server.listen() is asynchronus so it stay listenning if we make any request. We use the event loop to keep linsting every request comming to the server. 
+
+## Asynchronous pattern
+On of the problem of nesting synchrounous action is that it will block the server. We wil have a risk to block the event loop to asynchrounous code will be better. 
+
+
+## Events 
+On a JS apps big part of our work is to handle events. 
+That style of programming is called event programming. 
+We listen for specific event, register function that will handle this specific event.  
+When a event takes place a callback function is lunched. 
+
+````js
+const EventEmitter = require('events');
+
+const customEmitter = new EventEmitter();
+// on for listen a event
+customEmitter.on('response', (name, id)=>{
+    console.log(`data recieved ${name} : ${id}`)
+})
+customEmitter.on('response', ()=>{ // here we don't have argument but it will not affect the function emit.
+    console.log(`data recieved`)
+})
+// emit to fire a event
+customEmitter.emit('response','Jhon', 34)`
+````
+We first listen event before to fire event. 
+
+## Streams
+Streams are used to read or write sequentially. 
+    writable : write data sequentially
+    readable : read data sequentially 
+    duplex : write & read data sequentially 
+    transform : data can be modified 
+
+Streams extends emitter class. 
+If we have a big file, it can be very usefull and allows us to keep the app performance to get the data piece by piece.
+
+````js
+const {createReadStream} = require('fs');
+const stream = createReadStream('./pathTothefile.txt', {highWaterMark: 9000, encoding: 'utf-8'})
+
+stream.on('data', (result)=>{
+    console.log(result) // send us a buffer by default size is 64kb
+})
+// {highWaterMark: 9000} allow tu adjuste the size of the buffer
+
+stream.on('error', (err)=> console.log(err))
+````
+
+````js
+// pratical exmpl 
+
+const htpp = require('htpp');
+const fs = require('fs');
+const { Http2ServerRequest } = require('http2');
+
+http
+    .createServer((req, res)=>{
+        const text = fs.readFileSync('./pathToMyBIGFile', 'utf-8')
+        res.send(text)
+    })
+    .listen
+/// here we don't chunck the data that we send to the client, which can ba probblematique and reduc performance if data are very big. 
+
+
+http
+    .createServer((req, res)=>{
+        const fileStream = fs.createReadStream('./pathToMyBIGFile', 'utf-8')
+        fileStream.on('open', ()=>{
+            fileStream.pipe(res)
+            // The readable.pipe() method in a Readable Stream is used to attach a Writable stream to the readable stream so that it consequently switches into flowing mode and then pushes all the data that it has to the attached Writable. 
+            // we write data in chuncks
+        })
+        fileStream.on('error', (err)=>{
+            res.end(erro)
+        })
+    })
+    .listen
+````
+
+## HTTP Message
+
+Request and Response have both : 
+    - start line 
+    - headers (option, contain metadata about the request or the response)
+    - option body : when the request want a certain ressource on the server, we call it the payload. 
+
+request => what client request from the server
+reponse => what server send us to a request 
+
+## HTPP Methods 
+    GET / POST / PUT / DELETE 
+
+## Express
+### HTPP basics 
+````js
+const http = require('http');
+const server  = http.createServer((req, res)=>{
+    console.log('user hit the server')
+
+    // when the user hit the server we have to send a response and use end()
+    res.end('Welcome budy')
+})
+
+server.listen(5000)
+````
