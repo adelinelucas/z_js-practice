@@ -328,3 +328,122 @@ const server  = http.createServer((req, res)=>{
 
 server.listen(5000)
 ````
+
+### HTTP request object 
+````js
+const http = require('http');
+const server  = http.createServer((req, res)=>{
+    console.log('user hit the server')
+    console.log(req.method) // to know the method use by the user
+    console.log(req.url)// to know the method url request by the user
+    // we send hearder infos, metadata bout our response
+
+    const url = req.url;
+    if(url === '/'){
+        res.writeHead(200, {'content-type': 'text/html'})
+
+        res.write('<h1>Hello there</h1>')
+    
+        // when the user hit the server we have to send a response and use end()
+        res.end()
+    }else if (url ==='/about'){
+        res.writeHead(200, {'content-type': 'text/html'})
+        res.write('<h2>About us</h2>')
+        res.end()
+    }else{
+        res.writeHead(404, {'content-type': 'text/html'})
+        res.write('<p>La page n\'existe pas !')
+        res.end()  
+    }
+    
+})
+
+server.listen(5000)
+```` 
+
+### HTTP HTML File
+````js
+const { readFileSync } = require('fs');
+const http = require('http');
+
+// get all files 
+// here we use synchronus function beacause we want to charge the page when we arrive on the client, it's not related to any client request specificly. 
+const homePage = readFileSync('./index.html'); 
+const server  = http.createServer((req, res)=>{
+
+    const url = req.url;
+    if(url === '/'){
+        res.writeHead(200, {'content-type': 'text/html'})
+
+        res.write(homePage)
+    
+        // when the user hit the server we have to send a response and use end()
+        res.end()
+    }else if (url ==='/about'){
+        res.writeHead(200, {'content-type': 'text/html'})
+        res.write('<h2>About us</h2>')
+        res.end()
+    }else{
+        res.writeHead(404, {'content-type': 'text/html'})
+        res.write('<p>La page n\'existe pas !')
+        res.end()  
+    }
+    
+})
+
+server.listen(5000)
+````
+````js
+const { readFileSync } = require('fs');
+const http = require('http');
+
+// get all files 
+// here we use synchronus function beacause we want to charge the page when we arrive on the client, it's not related to any client request specificly. 
+const homePage = readFileSync('./navbar-app/index.html'); 
+const homeStyles = readFileSync('./navbar-app/styles.css'); 
+const homeImages= readFileSync('./navbar-app/logo.svg'); 
+const homeLogic = readFileSync('./navbar-app/browser-app.js'); 
+
+
+const server  = http.createServer((req, res)=>{
+// we will have to setup all path to request specific ressource. 
+
+    const url = req.url;
+    console.log(url)
+    if(url === '/'){
+        res.writeHead(200, {'content-type': 'text/html'})
+
+        res.write(homePage)
+    
+        // when the user hit the server we have to send a response and use end()
+        res.end()
+    }else if (url ==='/about'){
+        res.writeHead(200, {'content-type': 'text/html'})
+        res.write('<h2>About us</h2>')
+        res.end()
+    }else if (url ==='/browser-app.js'){
+        res.writeHead(200, {'content-type': 'text/js'})
+        res.write(homeLogic)
+        res.end()
+    }
+    else if (url ==='/styles.css'){
+        res.writeHead(200, {'content-type': 'text/css'})
+        res.write(homeStyles)
+        res.end()
+    }
+    else if (url ==='/logo.svg'){
+        res.writeHead(200, {'content-type': 'image/svg+xml'})
+        res.write(homeImages)
+        res.end()
+    }
+    
+    else{
+        res.writeHead(404, {'content-type': 'text/html'})
+        res.write('<p>La page n\'existe pas !')
+        res.end()  
+    }
+    
+})
+
+server.listen(5000)
+````
