@@ -142,3 +142,297 @@ app.get('/api/v1/query', (req,res)=>{
     // res.send('HelloooO');
 })
 ````
+
+## Middleware
+Middlare are functions that execute during the request to the server . Eache middleware function avec access to request and response objects. 
+Middleware are everywhere in express.
+Middleware stands in between request and the response
+request =====>> middleware =====>>  response
+
+We stuck the middleware between the path and the callback function.
+Express supplies for us the request, allow us to modify the response, and say what we do next.
+````js
+// req => middleware => response
+
+// middleware logger
+// express supplies for us the request, allow us to modify the response, and say what we do next. 
+const logger = (req, res, next)=>{
+    const method = req.method;
+    const url = req.url;
+    const time = new Date().getFullYear();
+    console.log(method, url, time)
+    // next allow us to pass to the next middleware unless you set up the response youself res.send('my response')
+    next();
+}
+
+// we stuck the middleware between the path and the callback function.
+app.get('/',logger, (req, res)=>{
+    res.send('Home')
+})
+
+app.get('/about',logger, (req, res)=>{
+    res.send('About')
+})
+````
+
+We can use the "use" fonctionnality of express to apply our middleware to all our routes. 
+````js
+// to apply  the middleware to all routes 
+app.use(logger)
+````
+
+````js
+app.get('/', (req, res)=>{
+    res.send('Home')
+})
+
+// here get is befor applying the middleware so it is not concerned
+// to apply  the middleware to all routes 
+app.use(logger)
+
+app.get('/', (req, res)=>{
+    res.send('Home')
+})
+
+app.get('/about', (req, res)=>{
+    res.send('About')
+})
+````
+
+RQ we can prodive a specific route to the use. 
+````js
+// here get is befor applying the middleware so it is not concerned
+// to apply  the middleware to all routes 
+app.use('/api', logger)
+````
+
+RQ/ we can exceute several middleware in app.use
+RQ :  becarful because they will be excute in the order.
+````js
+// exceute multiples middlewares in app.use
+app.use([logger, authorize])
+````
+````js
+const authorize = (req, res, next) =>{
+    console.log('authorized');
+    const {user} = req.query;
+    if(user === 'ade'){
+        req.user= {name: 'Ade', id:4}
+        next();
+    }
+    else{
+        res.status(401).send('Unanthorized')
+    }
+}
+````
+
+For middleware we have several option : 
+- our middleware 
+- express built in middleware  
+    **app.use(express.static('./public))** this middleware will help us to charge ton fils that we will not change.
+- third party middflvare
+    **morgan** 
+````js
+const morgan = require('morgan')
+app.use(morgan('tiny'))
+````
+
+## GET Method 
+Default method that the browser performs 
+````js
+app.get('/api/people', (req,res)=>{
+    res.status(200).json({success:true, data: people})
+})
+````
+
+## POST Method 
+In order to insert data. 
+When we use a POST method in order to send the data to the server, we will use the body. 
+````js
+// parse form data 
+// middleware to acces the data
+app.use(express.urlencoded({extended: false}))
+// it parses incoming request with urlencoded and is base on body-parser
+// in previous version of express you have to install the body parser
+app.post('/login',(req,res)=>{
+    console.log(req.body)
+    const {name} = req.body; 
+    if(name){
+        return res.status(200).send(`Welcome ${name}`)
+    }
+    res.status(401).send('Please provide credentials')
+})
+````
+
+RQ: event the url is the same, is the HTPP method is different it is not the same url. 
+
+#### expl with JS fetched data
+````js
+// to handle json data 
+app.use(express.json())
+
+app.get('/api/people', (req,res)=>{
+    res.status(200).json({success:true, data: people})
+})
+
+app.post('/api/people/', (req, res)=>{
+    const {name } = req.body;
+    if(!name){
+        return res.status(400).json({success:false, msg:'please provide a name value'})
+    }
+    res.status(201).json({success:true, person: name})
+})
+````
+
+## PUT Method
+This method is for editing the data. 
+````js
+app.put('/api/people/:id', (req,res)=>{
+    const {id} = req.params;
+    const {name} = req.body;
+    console.log(id, name)
+    
+    const person = people.find((person) => person.id === Number(id))
+    if(!person){
+        return res.status(404).json({success:false, msg:`no person width id ${id}`})
+    }
+
+    const newPerson = people.map((person)=>{
+        if(person.id ===Number(id)){
+            person.name = name
+        }
+        return person
+    })
+    res.status(200).json({success:true, data: newPerson})
+})
+````
+
+## DELETE Method
+````js
+app.delete('/api/people/:id', (req, res)=>{
+    const person = people.find((person) => person.id === Number(req.params.id))
+    if(!person){
+        return res.status(404).json({success:false, msg:`no person width id ${req.params.id}`})
+    }
+
+    const newPeople = people.filter((person)=>person.id !== Number(req.params.id))
+    return res.status(200).json({success:true, data: newPeople})
+})
+````
+
+## Express Router 
+Express router will help us to manage our route more easily. 
+
+- in app.js file 
+````js
+// import our router 
+const pleopleRouter = require('./routes/people')
+const loginRouter = require('./routes/auth')
+
+//....
+// we use a predefine route for our one router
+app.use('/login',loginRouter)
+app.use('/api/people',pleopleRouter)
+````
+
+- in routes folder for each file of routes
+````js
+const express = require('express');
+
+// we invoke express router
+const router = express.Router();
+
+router.post('/',(req,res)=>{
+    console.log(req.body)
+    const {name} = req.body; 
+    if(name){
+        return res.status(200).send(`Welcome ${name}`)
+    }
+    res.status(401).send('Please provide credentials')
+})
+
+module.exports = router
+````
+
+## Express Controller
+
+The MVC structure of file will really help to clear the functionality and havbe a better set up for our server app. 
+
+
+- router file 
+````js
+const express = require('express');
+const {getPeople, createPerson, createPersonPostman, updatePerson, deletePerson} = require('../controllers/people.controller')
+
+// we invoke express router
+const router = express.Router();
+
+router.get('/',getPeople)
+router.post('/postman',createPersonPostman )
+router.post('/',createPerson )
+router.put('/:id',updatePerson )
+router.delete('/:id', deletePerson)
+
+
+// another way to writes routes 
+router.route('/').get(getPeople).post(createPerson).post(createPersonPostman)
+router.route('/postman').post(createPersonPostman)
+router.route('/:id').put(updatePerson).delete(deletePerson)
+
+module.exports = router
+````
+- controller files
+````js 
+let {people} = require('../data.js')
+
+const getPeople = (req, res) =>{
+    res.status(200).json({success:true, data: people})
+}
+
+const createPerson = (req, res)=>{
+    const {name } = req.body;
+    if(!name){
+        return res.status(400).json({success:false, msg:'please provide a name value'})
+    }
+    res.status(201).json({success:true, person: name})
+}
+
+const createPersonPostman = (req, res)=>{
+    const {name} = req.body;
+    if(!name){
+        return res.status(400).json({success:false, msg:'please provide a name value'})
+    }
+    res.status(201).json({success:true, data: [...people, name]})
+
+}
+
+const updatePerson = (req,res)=>{
+    const {id} = req.params;
+    const {name} = req.body;
+    console.log(id, name)
+    
+    const person = people.find((person) => person.id === Number(id))
+    if(!person){
+        return res.status(404).json({success:false, msg:`no person width id ${id}`})
+    }
+
+    const newPerson = people.map((person)=>{
+        if(person.id ===Number(id)){
+            person.name = name
+        }
+        return person
+    })
+    res.status(200).json({success:true, data: newPerson})
+}
+
+const deletePerson = (req, res)=>{
+    const person = people.find((person) => person.id === Number(req.params.id))
+    if(!person){
+        return res.status(404).json({success:false, msg:`no person width id ${req.params.id}`})
+    }
+
+    const newPeople = people.filter((person)=>person.id !== Number(req.params.id))
+    return res.status(200).json({success:true, data: newPeople})
+}
+
+module.exports = {getPeople, createPerson, createPersonPostman, updatePerson, deletePerson}
